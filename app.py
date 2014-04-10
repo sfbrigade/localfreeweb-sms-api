@@ -25,8 +25,8 @@ def receive_text():
 	response = urllib.urlopen(get_closest_free_net_url)
 	for line in response:
 		response_dict = simplejson.loads(line)
-	    response = "Ask for 'free internet' at these places:"
-	for i in range(0, 3):
+#	    response = "Ask for 'free internet' at these places:"
+#	for i in range(0, 3):
 #	    response += " " + response_dict['rows'][i]['address'] + ";"	    
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
@@ -34,8 +34,8 @@ def receive_text():
 	# 	    print 'San Francisco, CA ' + str(response_dict['rows'][i]['zip'])
 	# 	    print 'Phone number: ' + str(response_dict['rows'][i]['phone'])
 	resp = twilio.twiml.Response()
-	resp.message(response)
-#	resp.message(response_dict['rows'][0]['name'])
+#	resp.message(response)
+	resp.message(response_dict['rows'][0]['name'])
 	return str(resp) 
 
 if __name__ == "__main__":
