@@ -8,6 +8,7 @@ app = Flask(__name__)
 def receive_text():
 
 	# print request.values
+	results = ""
 	stop_id = request.values.get("Body")
 
 	get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT stop_lat, stop_lon FROM stops WHERE stop_id = '
@@ -26,15 +27,15 @@ def receive_text():
 	for line in response:
 		response_dict = simplejson.loads(line)
 #	    response = "Ask for 'free internet' at these places:"
-#	for i in range(0, 3):
-#	    response += " " + response_dict['rows'][i]['address'] + ";"	    
+	for i in range(0, 3):
+	    results += " " + response_dict['rows'][i]['address'] + ";"	    
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
 	# 	    print str(response_dict['rows'][i]['address'])
 	# 	    print 'San Francisco, CA ' + str(response_dict['rows'][i]['zip'])
 	# 	    print 'Phone number: ' + str(response_dict['rows'][i]['phone'])
 	resp = twilio.twiml.Response()
-	resp.message("Ask for 'free internet' at these places:")
+	resp.message("Ask for 'free internet' at these places:" + results)
 #	resp.message(response_dict['rows'][0]['name'])
 	return str(resp) 
 
