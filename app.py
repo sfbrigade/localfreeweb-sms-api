@@ -34,8 +34,8 @@ def receive_text():
 	# 	    print 'San Francisco, CA ' + str(response_dict['rows'][i]['zip'])
 	# 	    print 'Phone number: ' + str(response_dict['rows'][i]['phone'])
 	resp = twilio.twiml.Response()
-#	resp.message(response)
-	resp.message(response_dict['rows'][0]['name'])
+	resp.message("Ask for 'free internet' at these places:")
+#	resp.message(response_dict['rows'][0]['name'])
 	return str(resp) 
 
 if __name__ == "__main__":
