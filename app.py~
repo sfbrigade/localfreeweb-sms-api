@@ -42,7 +42,7 @@ def receive_text():
     get_geo_url += stop_id
     response = urllib.urlopen(get_geo_url)
     for line in response:
-            response_dict = simplejson.loads(line)
+         response_dict = simplejson.loads(line)
     #    print response_dict
     geo_lat = str(response_dict['rows'][0]['stop_lat'])
     geo_long = str(response_dict['rows'][0]['stop_lon'])
