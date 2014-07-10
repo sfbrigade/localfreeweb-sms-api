@@ -12,7 +12,7 @@ def receive_text():
     # print request.values
     results = ""
     stop_id = request.values.get("Body")
-    phone_number = request.values.get("From")
+    #phone_number = request.values.get("From")
 
     # Post data to Google Spreadsheet code
     #email = 'sfbrigade@gmail.com'
