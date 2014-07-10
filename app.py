@@ -26,7 +26,7 @@ def receive_text():
 	response = urllib.urlopen(get_closest_free_net_url)
 	for line in response:
 		response_dict = simplejson.loads(line)
-#	    response = "Ask for 'free internet' at these places:"
+
 	for i in range(0, 3):
 	    results += " " + response_dict['rows'][i]['address'] + ";"	    
 	# 	    print '\nResult ' + str(i + 1) + ': '
