@@ -30,16 +30,17 @@ def receive_text():
 
 	for i in range(0, 3):
 	    results += " " + response_dict['rows'][i]['name'] + " @ "
-	    results += response_dict['rows'][i]['address'] + ";"	
+	    #results += response_dict['rows'][i]['address'] + ";"
+	    results += i
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
 	# 	    print str(response_dict['rows'][i]['address'])
 	# 	    print 'San Francisco, CA ' + str(response_dict['rows'][i]['zip'])
 	# 	    print 'Phone number: ' + str(response_dict['rows'][i]['phone'])
 	resp = twilio.twiml.Response()
-	resp.message("Ask for 'free internet' at these places:" + results)
+    resp.message("Ask for 'free internet' at these places:" + results)
 #	resp.message(response_dict['rows'][0]['name'])
-	return str(resp) 
+    return str(resp)
 
 if __name__ == "__main__":
     app.run(debug=True)
