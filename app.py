@@ -6,10 +6,10 @@ import gdata.spreadsheet.service
 
 #Global Variables
 #gdata variables
-email_address = 'sfbrigade@gmail.com'
-password = 'hack4change'
-spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
-worksheet_id = 'od6'
+email_address = "sfbrigade@gmail.com"
+password = "hack4change"
+spreadsheet_key = "1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU"
+worksheet_id = "od6"
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ def receive_text():
 	results = ""
 	stop_id = request.values.get("Body")
 	phone_number = request.values.get("From")
-	#log_text_message(stop_id, phone_number)
+	log_text_message(stop_id, phone_number)
 	
 	get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT stop_lat, stop_lon FROM stops WHERE stop_id = '
 	get_geo_url += stop_id
@@ -58,7 +58,7 @@ def log_text_message(stop_id, phone_number):
 	spr_client.email = email_address
 	spr_client.password = password
 	spr_client.source = 'LocalFreeWeb text message app'
-	spr_client.ProgrammaticLogin()
+#	spr_client.ProgrammaticLogin()
 	#Data Dictionary
 #	row = {}
 #	row['date'] = time.strftime('%m/%d/%Y')
