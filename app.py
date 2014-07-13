@@ -60,12 +60,12 @@ def log_text_message(stop_id, phone_number):
 	spr_client.source = 'LocalFreeWeb text message app'
 	spr_client.ProgrammaticLogin()
 	#Data Dictionary
-#	row = {}
-#	row['date'] = time.strftime('%m/%d/%Y')
-#	row['time'] = time.strftime('%H:%M:%S')
+	row = {}
+	row['date'] = time.strftime('%m/%d/%Y')
+	row['time'] = time.strftime('%H:%M:%S')
 #	row['phone_number'] = phone_number
 #	row['stop_id'] = stop_id
-#	entry = spr_client.InsertRow(row, spreadsheet_key, worksheet_id)
+	entry = spr_client.InsertRow(row, spreadsheet_key, worksheet_id)
 	return True
 
 if __name__ == "__main__":
