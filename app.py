@@ -46,7 +46,7 @@ def receive_text():
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
 	# 	    print str(response_dict['rows'][i]['address'])
-	# 	    print 'San Francisco, CA ' + str(response_dict['rows'][i]['zip'])
+	# 	    print 'San Francisco, CA ' + str(response_dict['rows'][i]['zip'])phone_number
 	# 	    print 'Phone number: ' + str(response_dict['rows'][i]['phone'])
 	resp = twilio.twiml.Response()
 	resp.message("Ask for 'free internet' at these places:" + results)
@@ -61,12 +61,12 @@ def log_text_message(stop_id, phone_number):
 	spr_client.source = 'LocalFreeWeb text message app'
 	spr_client.ProgrammaticLogin()
 	#Data Dictionary
-	row = {}
-	row['date'] = time.strftime('%m/%d/%Y')
-	row['time'] = time.strftime('%H:%M:%S')
-	row['phone_number'] = phone_number
-	row['stop_id'] = stop_id
-	entry = spr_client.InsertRow(row, spreadsheet_key, worksheet_id)
+#	row = {}
+#	row['date'] = time.strftime('%m/%d/%Y')
+#	row['time'] = time.strftime('%H:%M:%S')
+#	row['phone_number'] = phone_number
+#	row['stop_id'] = stop_id
+#	entry = spr_client.InsertRow(row, spreadsheet_key, worksheet_id)
 	return True
 
 if __name__ == "__main__":
