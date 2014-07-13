@@ -7,8 +7,8 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 def receive_text():
 
-	# print request.values
-	results = ""
+    # print request.values
+    results = ""
 	stop_id = request.values.get("Body")
 	phone_number = request.values.get("From")
 
@@ -30,7 +30,8 @@ def receive_text():
 
 	for i in range(0, 3):
 	    results += " " + response_dict['rows'][i]['name'] + " @ "
-	    results += response_dict['rows'][i]['address'] + ";"	
+	    #results += response_dict['rows'][i]['address'] + ";"
+	    results += i
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
 	# 	    print str(response_dict['rows'][i]['address'])
