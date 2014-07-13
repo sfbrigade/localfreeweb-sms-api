@@ -7,11 +7,10 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 def receive_text():
 
-    email = 'sfbrigade@gmail.com'
-    password = 'hack4change'
 	# print request.values
 	results = ""
 	stop_id = request.values.get("Body")
+	phone_number = request.values.get("From")
 
 	get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT stop_lat, stop_lon FROM stops WHERE stop_id = '
 	get_geo_url += stop_id
