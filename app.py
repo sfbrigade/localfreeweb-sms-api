@@ -8,7 +8,6 @@ import gdata.spreadsheet.service
 #gdata variables
 email_address = 'sfbrigade@gmail.com'
 password = 'hack4change'
-weight = '180'
 spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
 worksheet_id = 'od6'
 
@@ -22,7 +21,7 @@ def receive_text():
 	results = ""
 	stop_id = request.values.get("Body")
 	phone_number = request.values.get("From")
-	log_text_message(stop_id, phone_number)
+	#log_text_message(stop_id, phone_number)
 	
 	get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT stop_lat, stop_lon FROM stops WHERE stop_id = '
 	get_geo_url += stop_id
