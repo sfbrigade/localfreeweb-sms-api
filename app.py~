@@ -1,8 +1,11 @@
 from flask import Flask, request, redirect
 import urllib, simplejson
 import twilio.twiml
+import time
+import gdata.spreadsheet.service
 
 #Global Variables
+#gdata variables
 email_address = 'sfbrigade@gmail.com'
 password = 'hack4change'
 weight = '180'
