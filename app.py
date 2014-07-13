@@ -58,7 +58,7 @@ def log_text_message(stop_id, phone_number):
 	spr_client.email = email_address
 	spr_client.password = password
 	spr_client.source = 'LocalFreeWeb text message app'
-#	spr_client.ProgrammaticLogin()
+	spr_client.ProgrammaticLogin()
 	#Data Dictionary
 #	row = {}
 #	row['date'] = time.strftime('%m/%d/%Y')
