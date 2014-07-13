@@ -29,7 +29,7 @@ def receive_text():
 		response_dict = simplejson.loads(line)
 
 	for i in range(0, 3):
-	    results += " " + response_dict['rows'][i]['name'] + " @ "
+        results += " " + response_dict['rows'][i]['name'] + " @ "
         results += response_dict['rows'][i]['address'] + ";"	    
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
