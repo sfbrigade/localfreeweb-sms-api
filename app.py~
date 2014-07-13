@@ -6,10 +6,10 @@ import gdata.spreadsheet.service
 
 #Global Variables
 #gdata variables
-email_address = "sfbrigade@gmail.com"
-password = "hack4change"
-spreadsheet_key = "1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU"
-worksheet_id = "od6"
+email_address = 'sfbrigade@gmail.com'
+password = 'hack4change'
+spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
+worksheet_id = 'od6'
 
 app = Flask(__name__)
 
@@ -61,13 +61,22 @@ def log_text_message(stop_id, phone_number):
 	spr_client.source = 'LocalFreeWeb text message app'
 	spr_client.ProgrammaticLogin()
 	#Data Dictionary
-	dict = {}
+	
 #	dict['date'] = time.strftime('%m/%d/%Y')
 #	dict['time'] = time.strftime('%H:%M:%S')
 #	dict['phone_number'] = phone_number
 #	dict['stop_id'] = stop_id
-	entry = spr_client.InsertRow(dict, spreadsheet_key, worksheet_id)
-	
+	entry = spr_client.InsertRow(build_data_dict(stop_id, phone_number), spreadsheet_key, worksheet_id)
+
+
+def build_data_dict(stop_id, phone_number):
+
+	dict = {}
+	dict['date'] = str(time.strftime('%m/%d/%Y'))
+	dict['time'] = str(time.strftime('%H:%M:%S'))	
+#	dict['phone_number'] = phone_number
+#	dict['stop_id'] = stop_id
+	return dict
 
 if __name__ == "__main__":
     app.run(debug=True)
