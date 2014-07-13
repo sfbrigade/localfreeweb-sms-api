@@ -22,6 +22,7 @@ def receive_text():
 	results = ""
 	stop_id = request.values.get("Body")
 	phone_number = request.values.get("From")
+	log_text_message(stop_id, phone_number)
 	
 	get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT stop_lat, stop_lon FROM stops WHERE stop_id = '
 	get_geo_url += stop_id
@@ -52,7 +53,20 @@ def receive_text():
 #	resp.message(response_dict['rows'][0]['name'])
 	return str(resp)
 
-#def log_text_message(stop_id, phone_number):	
+def log_text_message(stop_id, phone_number):	
+	
+	spr_client = gdata.spreadsheet.service.SpreadsheetsService()
+	spr_client.email = email_address
+	spr_client.password = password
+	spr_client.source = 'Example Spreadsheet Writing Application'
+	spr_client.ProgrammaticLogin()
+	#Data Dictionary
+	dict = {}
+	dict['date'] = time.strftime('%m/%d/%Y')
+	dict['time'] = time.strftime('%H:%M:%S')
+	dict['weight'] = weight
+	entry = spr_client.InsertRow(dict, spreadsheet_key, worksheet_id)
+	return True
 
 if __name__ == "__main__":
     app.run(debug=True)
