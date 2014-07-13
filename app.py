@@ -2,7 +2,7 @@ from flask import Flask, request, redirect
 import urllib, simplejson
 import twilio.twiml
 import time
-import gdata.spreadsheet.service
+#import gdata.spreadsheet.service
 
 #Global Variables
 #gdata variables
