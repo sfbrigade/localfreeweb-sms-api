@@ -30,7 +30,7 @@ def receive_text():
 
 	for i in range(0, 3):
 	    results += " " + response_dict['rows'][i]['name'] + " @ "
-        results += response_dict['rows'][i]['address'] + ";"	
+	    results += response_dict['rows'][i]['address'] + ";"	
 	# 	    print '\nResult ' + str(i + 1) + ': '
 	# 	    print str(response_dict['rows'][i]['name'])
 	# 	    print str(response_dict['rows'][i]['address'])
