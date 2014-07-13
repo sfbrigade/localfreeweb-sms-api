@@ -5,7 +5,7 @@ import time
 import gdata.spreadsheet.service
 
 #Global Variables
-#gdata variables
+#gdata Variables
 email_address = 'sfbrigade@gmail.com'
 password = 'hack4change'
 weight = '180'
