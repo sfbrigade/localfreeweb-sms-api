@@ -4,16 +4,15 @@ import twilio.twiml
 import time
 import gdata.spreadsheet.service
 
-app = Flask(__name__)
-
-@app.route("/",methods=["GET","POST"])
-
 #Global Variables
-email = 'sfbrigade@gmail.com'
+email_address = 'sfbrigade@gmail.com'
 password = 'hack4change'
 weight = '180'
 spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
 worksheet_id = 'od6'
+app = Flask(__name__)
+
+@app.route("/",methods=["GET","POST"])
 
 def receive_text():
 

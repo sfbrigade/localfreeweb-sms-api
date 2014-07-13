@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 
 #Global Variables
-email = 'sfbrigade@gmail.com'
+email_address = 'sfbrigade@gmail.com'
 password = 'hack4change'
 weight = '180'
 spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
@@ -53,6 +53,12 @@ def receive_text():
 	return str(resp)
 	
 def log_text_message(stop_id, phone_number):	
+
+	spr_client = gdata.spreadsheet.service.SpreadsheetsService()
+	spr_client.email = email
+	spr_client.password = password
+	spr_client.source = 'LocalFreeWeb Texting App'
+	spr_client.ProgrammaticLogin()
 
 if __name__ == "__main__":
     app.run(debug=True)
