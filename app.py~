@@ -59,6 +59,7 @@ def log_text_message(stop_id, phone_number):
 	spr_client.password = password
 	spr_client.source = 'LocalFreeWeb Texting App'
 	spr_client.ProgrammaticLogin()
+	return True
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -52,14 +52,14 @@ def receive_text():
 #	resp.message(response_dict['rows'][0]['name'])
 	return str(resp)
 	
-def log_text_message(stop_id, phone_number):	
+#def log_text_message(stop_id, phone_number):	
 
-	spr_client = gdata.spreadsheet.service.SpreadsheetsService()
-	spr_client.email = email
-	spr_client.password = password
-	spr_client.source = 'LocalFreeWeb Texting App'
-	spr_client.ProgrammaticLogin()
-	return True
+#	spr_client = gdata.spreadsheet.service.SpreadsheetsService()
+#	spr_client.email = email
+#	spr_client.password = password
+#	spr_client.source = 'LocalFreeWeb Texting App'
+#	spr_client.ProgrammaticLogin()
+#	return True
 
 if __name__ == "__main__":
     app.run(debug=True)
