@@ -62,8 +62,10 @@ def log_text_message(stop_id, phone_number):
 	spr_client.ProgrammaticLogin()
 	#Data Dictionary
 	dict = {}
-	dict['date'] = time.strftime('%m/%d/%Y')
-	dict['time'] = time.strftime('%H:%M:%S')
+	dict['date'] = 'today'
+	dict['time'] = 'now'	
+#	dict['date'] = time.strftime('%m/%d/%Y')
+#	dict['time'] = time.strftime('%H:%M:%S')
 #	dict['phone_number'] = phone_number
 #	dict['stop_id'] = stop_id
 	entry = spr_client.InsertRow(dict, spreadsheet_key, worksheet_id)
