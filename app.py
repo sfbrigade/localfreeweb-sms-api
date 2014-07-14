@@ -74,8 +74,8 @@ def build_data_dict(stop_id, phone_number):
 	dict = {}
 	dict['date'] = time.strftime('%m/%d/%Y')
 	dict['time'] = time.strftime('%H:%M:%S')	
-	dict['PhoneNumber'] = "hello"
-	dict['StopId'] = "hackers"
+	dict['phone'] = 'hello'
+	dict['stop'] = 'hackers'
 	return dict
 	
 
