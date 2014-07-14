@@ -72,8 +72,8 @@ def log_text_message(stop_id, phone_number):
 def build_data_dict(stop_id, phone_number):
 
 	dict = {}
-	dict['date'] = time.strftime('%m/%d/%Y')
-	dict['time'] = time.strftime('%I:%M:%S')	
+	dict['date'] = time.strftime('%x')
+	dict['time'] = time.strftime('%X')	
 	dict['phone'] = phone_number
 	dict['stop'] = stop_id
 	return dict
