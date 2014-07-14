@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect
 import urllib, simplejson
 import twilio.twiml
-import time
 import gdata.spreadsheet.service
 import gdata.service
 import atom.service
@@ -65,8 +64,8 @@ def log_text_message(stop_id, phone_number):
 def build_data_dict(stop_id, phone_number):
 
 	dict = {}
-	dict['date'] = time.strftime('%x')
-	dict['time'] = time.strftime('%X')	
+	dict['date'] = arrow.now('US/Pacific').format('MM/DD/YYYY')
+	dict['time'] = arrow.now('US/Pacific').format('hh:mm:ss A')	
 	dict['phone'] = phone_number
 	dict['stop'] = stop_id
 	return dict
