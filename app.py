@@ -3,6 +3,11 @@ import urllib, simplejson
 import twilio.twiml
 import time
 import gdata.spreadsheet.service
+import gdata.service
+import atom.service
+import gdata.spreadsheet
+import atom
+
 
 #Global Variables
 #gdata variables
@@ -14,6 +19,7 @@ worksheet_id = 'od6'
 app = Flask(__name__)
 
 @app.route("/",methods=["GET","POST"])
+
 
 def receive_text():
 
@@ -66,11 +72,12 @@ def log_text_message(stop_id, phone_number):
 def build_data_dict(stop_id, phone_number):
 
 	dict = {}
-	dict['date'] = str(time.strftime('%m/%d/%Y'))
-	dict['time'] = str(time.strftime('%H:%M:%S'))	
+	dict['date'] = time.strftime('%m/%d/%Y')
+	dict['time'] = time.strftime('%H:%M:%S')	
 #	dict['phone_number'] = phone_number
 #	dict['stop_id'] = stop_id
 	return dict
+	
 
 if __name__ == "__main__":
     app.run(debug=True)
