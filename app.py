@@ -24,7 +24,10 @@ app = Flask(__name__)
 
 
 def receive_text():
-
+	"""Function that performs main functionality of app ie;
+	logs received text message information and replys with a text message that
+	states the name and address of the 3 closest locations for 'free internet'.
+	"""
 	results = ""
 	stop_ID = request.values.get("Body")
 	phone_number = request.values.get("From")
