@@ -18,6 +18,10 @@ password = 'hack4change'
 spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
 worksheet_ID = 'od6'
 
+error_message = "We apologize for the inconvenience, we are unable to "
+error_message += "determine closest 'free internet' location(s). "
+error_message += "Please try another Stop ID. Thank you!"
+
 app = Flask(__name__)
 
 @app.route("/",methods=["GET","POST"])
@@ -25,8 +29,10 @@ app = Flask(__name__)
 
 def receive_text():
 	"""Function that performs main functionality of app ie;
-	logs received text message information and replys with a text message that
-	states the name and address of the 3 closest locations for 'free internet'.
+	logs received text message information to a Google Spreadsheet and replys
+	with a text message that states the name and address of the 3 closest
+	locations for 'free internet' from the bus stop that corresponds to the
+	recieved ID.
 	"""
 	results = ""
 	stop_ID = request.values.get("Body")
@@ -39,6 +45,12 @@ def receive_text():
 	response = urllib.urlopen(get_geo_url)
 	for line in response:
 		response_dict = simplejson.loads(line)
+		
+	if response_dict['total_rows'] == 0:
+		resp = twilio.twiml.Response()
+		resp.message(error_message)
+		return str(resp)
+		
 	geo_lat = str(response_dict['rows'][0]['stop_lat'])
 	geo_long = str(response_dict['rows'][0]['stop_lon'])
 	lat_long = [geo_lat, geo_long]
