@@ -45,16 +45,16 @@ def receive_text():
 
 	free_net_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT'
 	free_net_url += ' bizname, address, zip, phone, '
-	free_net_url += 'ST_Distance(the_geom::geography, ST_PointFromText(' 
+	free_net_url += 'ST_Distance(the_geom::geography, ST_PointFromText('
 	free_net_url += '\'POINT('+ geo_long + ' ' + geo_lat + ')\', 4326)'
-	free_net_url += '::geography) AS distance FROM freeweb ORDER BY distance ' 
+	free_net_url += '::geography) AS distance FROM freeweb ORDER BY distance '
 	free_net_url += 'ASC LIMIT 3'
 	response = urllib.urlopen(free_net_url)
 	for line in response:
 		response_dict = simplejson.loads(line)
 
 	for i in range(0, 3):
-	    results += " " + response_dict['rows'][i]['bizname'] + " @ " 
+	    results += " " + response_dict['rows'][i]['bizname'] + " @ "
 	    results += response_dict['rows'][i]['address'] + ";"
 	# 	print 'Phone number: ' + str(response_dict['rows'][i]['phone'])
 	resp = twilio.twiml.Response()
@@ -73,7 +73,7 @@ def log_text_message(stop_ID, phone_number):
 	spr_client.password = password
 	spr_client.source = 'LocalFreeWeb text message app'
 	spr_client.ProgrammaticLogin()
-	entry = spr_client.InsertRow(build_data_dict(stop_ID, phone_number), 
+	entry = spr_client.InsertRow(build_data_dict(stop_ID, phone_number),
 	                             spreadsheet_key, worksheet_ID)
 
 
@@ -89,7 +89,8 @@ def build_data_dict(stop_ID, phone_number):
     dict['phone'] = phone_number
     dict['stop'] = stop_ID
     return dict
-	
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
