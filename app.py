@@ -41,7 +41,7 @@ def receive_text():
 	lat_long = [geo_lat, geo_long]
 
 	free_net_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT'
-	free_net_url += ' name, address, zip, phone, '
+	free_net_url += ' bizname, address, zip, phone, '
 	free_net_url += 'ST_Distance(the_geom::geography, ST_PointFromText(' 
 	free_net_url += '\'POINT('+ geo_long + ' ' + geo_lat + ')\', 4326)'
 	free_net_url += '::geography) AS distance FROM freeweb ORDER BY distance ' 
