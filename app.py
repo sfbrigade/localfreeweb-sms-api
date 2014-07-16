@@ -79,13 +79,13 @@ def build_data_dict(stop_ID, phone_number):
     phone_number and stop_ID of received text message
     In args:    stop_ID, phone_number
     Out arg:    dict
-    """"
-	dict = {}
-	dict['date'] = arrow.now('US/Pacific').format('MM/DD/YYYY')
-	dict['time'] = arrow.now('US/Pacific').format('hh:mm:ss A')	
-	dict['phone'] = phone_number
-	dict['stop'] = stop_ID
-	return dict
+    """
+    dict = {}
+    dict['date'] = arrow.now('US/Pacific').format('MM/DD/YYYY')
+    dict['time'] = arrow.now('US/Pacific').format('hh:mm:ss A')
+    dict['phone'] = phone_number
+    dict['stop'] = stop_ID
+    return dict
 	
 
 if __name__ == "__main__":
