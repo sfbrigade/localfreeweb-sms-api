@@ -19,7 +19,7 @@ spreadsheet_key = '1S4jHX9__Drog_qqGsDJYFuO7KvRP9BUD8A95xQ5kkQU'
 worksheet_ID = 'od6'
 
 error_message = "We apologize for the inconvenience, we are unable to "
-error_message += "determine closest 'free internet' location(s). "
+error_message += "determine the closest 'free internet'. "
 error_message += "Please try another Stop ID. Thank you!"
 
 app = Flask(__name__)
