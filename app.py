@@ -51,7 +51,9 @@ def receive_text():
 	for line in response:
 		response_dict = simplejson.loads(line)
 		
-	if response_dict['total_rows'] == 0 or error == True:
+	if response_dict['total_rows'] == 0:
+		error = True
+	if error:
 		resp = twilio.twiml.Response()
 		resp.message(error_message)
 		return str(resp)
