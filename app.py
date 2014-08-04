@@ -55,7 +55,7 @@ def receive_text():
 		error = True
 	if error:
 		resp = twilio.twiml.Response()
-		resp.message(error_message)
+		resp.message(error_message + ' ' + request.values.get("Body"))
 		return str(resp)
 		
 	geo_lat = str(response_dict['rows'][0]['stop_lat'])
