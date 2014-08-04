@@ -40,13 +40,13 @@ def receive_text():
 	stop_ID = re.findall('\d+', request.values.get("Body"))
 	phone_number = request.values.get("From")
 	
-	if len(stop_ID) == 0:
-		error = True
-	else:	
+	if len(stop_ID) > 0:
 		log_text_message(stop_ID[0], phone_number)
 		get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 		get_geo_url += 'stop_lat, stop_lon FROM stops WHERE stop_id = '
 		get_geo_url += stop_ID[0]
+	else:
+		error = True
 	response = urllib.urlopen(get_geo_url)
 	for line in response:
 		response_dict = simplejson.loads(line)
