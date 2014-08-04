@@ -60,7 +60,7 @@ def receive_text():
 	geo_long = str(response_dict['rows'][0]['stop_lon'])
 	lat_long = [geo_lat, geo_long]
 
-	day = 'day' + arrow.now('US/Pacific').weekday()
+	day = 'day' + str(arrow.now('US/Pacific').weekday())
 	
 	free_net_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT'
 	free_net_url += ' bizname, address, ' + day + ', phone, '
