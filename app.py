@@ -45,7 +45,7 @@ def receive_text():
 		get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 		get_geo_url += 'stop_lat, stop_lon FROM stops WHERE stop_id = '
 		get_geo_url += stop_ID[0]
-	else if len(stop_ID) == 0:
+	else:
 		error = True
 	response = urllib.urlopen(get_geo_url)
 	for line in response:
