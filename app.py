@@ -63,7 +63,7 @@ def receive_text():
 	day = 'day' + arrow.now('US/Pacific').weekday()
 	
 	free_net_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT'
-	free_net_url += ' bizname, address, phone, ' + day + ', '
+	free_net_url += ' bizname, address, ' + day + ', phone, '
 	free_net_url += 'ST_Distance(the_geom::geography, ST_PointFromText('
 	free_net_url += '\'POINT('+ geo_long + ' ' + geo_lat + ')\', 4326)'
 	free_net_url += '::geography) AS distance FROM freeweb ORDER BY distance '
