@@ -76,9 +76,9 @@ def receive_text():
 	    results += " " + response_dict['rows'][i]['bizname'] + " @ "
 	    results += response_dict['rows'][i]['address'] + " "
 	    results += response_dict['rows'][i]['phone'] + " "
-	    results += "hrs: " + response_dict['rows'][i]['\'' + day + '\''] + ";"
+#	    results += "hrs: " + response_dict['rows'][i]['\'' + day + '\''] + ";"
 	resp = twilio.twiml.Response()
-	resp.message("Ask for 'free internet' at these places:" + results)
+	resp.message("Ask for 'free internet' at these places:" + results + str(response_dict))
 	return str(resp)
 
 
