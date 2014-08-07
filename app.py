@@ -19,10 +19,15 @@ def log_text_message(phone_number, content):
 
 def handle_text_message(content):
 	"""Function that ensures the text message can be processed and if not
-	gives the user a relevant error.
+	gives the user a relevant error. Returns error <bool> and content <str>.
+
+	Content will be the error message if error is True
 	"""
 
-	return content
+	if content[0] == '#':
+		return True, 'dont use a # in the beginning'
+	else:
+		return False, content
 
 carto_db_url = 'http://localfreeweb-cartodb-com-gwqynjms41pa.runscope.net/api/v2/sql?q=%s'
 #carto_db_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=%s'
@@ -64,17 +69,22 @@ def get_locations_near_stop(stop_id):
 	else:
 		return None
 
-def generate_response_text(locations):
+def generate_response_text(locations, **kwargs):
 	"""Function to send the proper response back to Twilio
 	"""
 
-	error_message = "We apologize for the inconvenience, we are unable to "
-	error_message += "determine the closest 'free internet'. "
-	error_message += "Please try another Stop ID. Thank you!"
+	no_location_error_message = "We apologize for the inconvenience, we are unable to "
+	no_location_error_message += "determine the closest 'free internet'. "
+	no_location_error_message += "Please try another Stop ID. Thank you!"
+
+	resp = twilio.twiml.Response()
 
 	if locations == None:
-		resp = twilio.twiml.Response()
-		resp.message(error_message)
+		resp.message(no_location_error_message)
+		return str(resp)
+	elif locations == 'user_error':
+		message = kwargs.get('error_text')
+		resp.message(message)
 		return str(resp)
 	else:
 		results = []
@@ -82,7 +92,6 @@ def generate_response_text(locations):
 			print location
 			results.append('%s @ %s' % (location['bizname'], location['address']))
 
-		resp = twilio.twiml.Response()
 		resp.message("Ask for 'free internet' at these places:" + ' ;'.join(results))
 		return str(resp)
 
@@ -100,11 +109,10 @@ def receive_text():
 
 	log_text_message(phone_number, sms_body)
 
-	stop_id = handle_text_message(sms_body)
+	error, stop_id = handle_text_message(sms_body)
 
-	if stop_id == None:
-		locations = None
-		response_text = generate_response_text(locations)
+	if error:
+		response_text = generate_response_text('user_error', error_text=stop_id)
 	else:
 		locations = get_locations_near_stop(stop_id)
 		response_text = generate_response_text(locations)
