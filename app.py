@@ -1,14 +1,34 @@
 #!/usr/bin/python
+import urllib, simplejson
 
 from flask import Flask, request, redirect
-import urllib, simplejson
 import twilio.twiml
+import requests
 
 error_message = "We apologize for the inconvenience, we are unable to "
 error_message += "determine the closest 'free internet'. "
 error_message += "Please try another Stop ID. Thank you!"
 
 app = Flask(__name__)
+
+def log_text_message(content, phone_number):
+	"""Function to abstract away logging. Right now this function will POST
+	against a Google Form URL to log text messages.
+	"""
+	form_url = 'https://docs.google.com/forms/d/1C9G06CyX-wHf4NeMSsqSqi-VWcqh-0--lUHszd0SdHA/formResponse'
+	params = {}
+	params['entry.1533669412'] = phone_number
+	params['entry.2016774916'] = content
+	log_request = requests.post(form_url, params=params)
+
+	print log_request
+
+def handle_text_message(content):
+	"""Function that ensures the text message can be processed and if not
+	gives the user a relevant error.
+	"""
+
+	return content
 
 @app.route("/",methods=["GET","POST"])
 def receive_text():
@@ -19,7 +39,9 @@ def receive_text():
 	recieved ID.
 	"""
 	results = ""
-	stop_ID = request.values.get("Body")
+	sms_body = request.values.get("Body", False)
+	content = handle_text_message(sms_body)
+
 	phone_number = request.values.get("From")
 	#log_text_message(stop_ID, phone_number)
 
