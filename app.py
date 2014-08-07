@@ -25,7 +25,12 @@ def handle_text_message(content):
 	"""
 
 	if content[0] == '#':
-		return True, 'dont use a # in the beginning'
+		content = content[1:]
+
+	try:
+		int(content)
+	except ValueError:
+		return True, 'stop id must be a number'
 	else:
 		return False, content
 
@@ -106,9 +111,7 @@ def receive_text():
 
 	phone_number = request.values.get("From")
 	sms_body = request.values.get("Body", False)
-
 	log_text_message(phone_number, sms_body)
-
 	error, stop_id = handle_text_message(sms_body)
 
 	if error:
