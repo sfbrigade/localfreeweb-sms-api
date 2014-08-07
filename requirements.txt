@@ -6,7 +6,6 @@ gunicorn==19.0.0
 httplib2==0.9
 itsdangerous==0.24
 requests==2.3.0
-simplejson==3.6.0
 six==1.7.3
 twilio==3.6.6
 wsgiref==0.1.2
