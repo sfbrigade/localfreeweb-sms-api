@@ -68,7 +68,6 @@ def receive_text():
 		return str(resp)	
 	geo_lat = str(response_dict['rows'][0]['stop_lat'])
 	geo_long = str(response_dict['rows'][0]['stop_lon'])
-	#lat_long = [geo_lat, geo_long]
 
 	day = 'day' + str(arrow.now('US/Pacific').weekday())
 	
@@ -83,9 +82,9 @@ def receive_text():
 		response_dict = simplejson.loads(line)
 
 	for i in range(0, 3):
-	    results += " " + response_dict['rows'][i]['bizname'] + " @ "
+	    results += " " + response_dict['rows'][i]['bizname'] + " "
 	    results += response_dict['rows'][i]['address'] + " "
-	    results += response_dict['rows'][i]['phone'] + " "
+	    results += response_dict['rows'][i]['phone'] + " | "
 	    results += "hrs: " + str(response_dict['rows'][i][day]).strip() + ";"
 	resp = twilio.twiml.Response()
 	resp.message("Ask for 'free internet' at these places:" + results)
