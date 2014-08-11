@@ -44,21 +44,28 @@ def receive_text():
 		log_text_message(stop_ID[0], phone_number)
 		get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 		get_geo_url += 'stop_lat, stop_lon FROM stops WHERE stop_id = '
-		get_geo_url += stop_ID[0]
-		response = urllib.urlopen(get_geo_url)
+		#Always remove 1st digit, if it doesn't work and the ID is 5 digits remove 1st TWO digits
+		response = urllib.urlopen(get_geo_url + stop_ID[0][1:])
 		for line in response:
-			response_dict = simplejson.loads(line)	
+			response_dict = simplejson.loads(line)
+			
 		if response_dict['total_rows'] == 0:
-			resp = twilio.twiml.Response()
-			resp.message(error_message)
-			return str(resp)
+			if len(stop_ID[0]) == 5:
+				response = urllib.urlopen(get_geo_url + stop_ID[0][2:])
+				for line in response:
+					response_dict = simplejson.loads(line)
+				
+			else:
+				resp = twilio.twiml.Response()
+				resp.message(error_message)
+				return str(resp)
 	else:
 		resp = twilio.twiml.Response()
 		resp.message(error_message)
 		return str(resp)	
 	geo_lat = str(response_dict['rows'][0]['stop_lat'])
 	geo_long = str(response_dict['rows'][0]['stop_lon'])
-	lat_long = [geo_lat, geo_long]
+	#lat_long = [geo_lat, geo_long]
 
 	day = 'day' + str(arrow.now('US/Pacific').weekday())
 	
