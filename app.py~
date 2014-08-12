@@ -40,7 +40,7 @@ def receive_text():
 	stop_ID = re.findall('\d+', request.values.get("Body"))
 	phone_number = request.values.get("From")
 	
-	if len(stop_ID) > 0:
+	if len(stop_ID) > 0 and len(stop_ID[0]) > 3:
 		log_text_message(stop_ID[0], phone_number)
 		get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 		get_geo_url += 'stop_lat, stop_lon FROM stops WHERE stop_id = '
@@ -84,7 +84,7 @@ def receive_text():
 	for i in range(0, 3):
 	    results += " " + response_dict['rows'][i]['bizname'] + " "
 	    results += response_dict['rows'][i]['address'] + " "
-	    results += response_dict['rows'][i]['phone'] + " "
+	    results += response_dict['rows'][i]['phone'] + " | "
 	    results += "hrs: " + str(response_dict['rows'][i][day]).strip() + ";"
 	resp = twilio.twiml.Response()
 	resp.message("Ask for 'free internet' at these places:" + results)

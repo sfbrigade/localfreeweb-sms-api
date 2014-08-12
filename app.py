@@ -37,10 +37,11 @@ def receive_text():
 	"""
 	error = False
 	results = ""
+	#Create list of all numbers in text message
 	stop_ID = re.findall('\d+', request.values.get("Body"))
 	phone_number = request.values.get("From")
-	
-	if len(stop_ID) > 0:
+	#Stop IDs are atleast FOUR digits
+	if len(stop_ID) > 0 and len(stop_ID[0]) > 3:
 		log_text_message(stop_ID[0], phone_number)
 		get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 		get_geo_url += 'stop_lat, stop_lon FROM stops WHERE stop_id = '
