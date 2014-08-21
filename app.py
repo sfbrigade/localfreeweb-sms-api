@@ -45,7 +45,8 @@ def receive_text():
 		log_text_message(stop_ID[0], phone_number)
 		get_geo_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 		get_geo_url += 'stop_lat, stop_lon FROM stops WHERE stop_id = '
-		#Always remove 1st digit, if it doesn't work and the ID is 5 digits remove 1st TWO digits
+		#Always remove 1st digit, if it doesn't work and
+		#the ID is 5 digits remove 1st TWO digits
 		response = urllib.urlopen(get_geo_url + stop_ID[0][1:])
 		for line in response:
 			response_dict = simplejson.loads(line)
