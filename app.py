@@ -49,7 +49,7 @@ def receive_text():
 		response = urllib.urlopen(get_geo_url + stop_ID[0][1:])
 		for line in response:
 			response_dict = simplejson.loads(line)
-			
+		#When total_rows is 0 there are no results	
 		if response_dict['total_rows'] == 0:
 			if len(stop_ID[0]) == 5:
 				response = urllib.urlopen(get_geo_url + stop_ID[0][2:])
@@ -85,8 +85,8 @@ def receive_text():
 	for i in range(0, 3):
 	    results += " " + response_dict['rows'][i]['bizname'] + " "
 	    results += response_dict['rows'][i]['address'] + " "
-	    results += response_dict['rows'][i]['phone'] + " | "
-	    results += "today's hrs: " + str(response_dict['rows'][i][day]).strip() + ";"
+	    results += response_dict['rows'][i]['phone'] + " | today's "
+	    results += "hrs: " + str(response_dict['rows'][i][day]).strip() + ";"
 	resp = twilio.twiml.Response()
 	resp.message("Ask for 'free internet' at these places:" + results)
 	return str(resp)
