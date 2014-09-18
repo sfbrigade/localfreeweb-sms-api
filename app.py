@@ -40,13 +40,13 @@ def receive_text():
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
     phone_number = request.values.get("From")
-    return generate_text_message(error_message + stop_ID[0])
     #Stop IDs are atleast FOUR digits
     if len(stop_ID) > 0 and len(stop_ID[0]) > 3:
         log_text_message(stop_ID[0], phone_number)
         #Always remove 1st digit from Stop ID, if it doesn't work and
         #the ID is 5 digits remove 1st TWO digits
         stop_gps_resp_dict = get_stop_gps(stop_ID[0][1:])
+        generate_text_message(str(stop_gps_resp_dict))
         #When total_rows is 0 there are no results    
         if stop_gps_resp_dict['total_rows'] == 0:
             if len(stop_ID[0]) == 5:
