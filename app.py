@@ -150,6 +150,8 @@ def generate_response_text(internet_resp_dict):
     In arg:      internet_resp_dict
     Out arg:     resp
     """
+    day = 'day' + str(arrow.now('US/Pacific').weekday())
+    
     results = ""
     for i in range(0, 3):
         results += " " + internet_resp_dict['rows'][i]['bizname'] + " "
