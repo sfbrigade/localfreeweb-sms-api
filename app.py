@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, request, redirect
-import urllib, simplejson
+import urllib, json as simplejson
 import twilio.twiml
 import gdata.spreadsheet.service
 import gdata.service
@@ -30,7 +30,6 @@ app = Flask(__name__)
 
 @app.route("/",methods=["GET","POST"])
   
-
 def receive_text():
     """Performs main functionality of app ie;
     logs received text message information to a Google Spreadsheet and replys
@@ -62,6 +61,7 @@ def receive_text():
     internet_resp_dict = get_closest_internet(stop_gps_resp_dict)
     return generate_response_text(internet_resp_dict)
 
+
 def log_text_message(stop_ID, phone_number):    
     """Logs the incoming text sender's phone number & the stop ID into a Google
     Spreadsheet.
@@ -72,7 +72,7 @@ def log_text_message(stop_ID, phone_number):
     spr_client = gdata.spreadsheet.service.SpreadsheetsService()
     spr_client.email = email_address
     spr_client.password = password
-    spr_client.source = 'LocalFreeWeb text message app'
+    spr_client.source = 'localfreeweb-sms-api'
     spr_client.ProgrammaticLogin()
     entry = spr_client.InsertRow(build_data_dict(stop_ID, phone_number),
                                  spreadsheet_key, worksheet_ID)
