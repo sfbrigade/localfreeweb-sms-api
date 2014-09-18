@@ -15,9 +15,9 @@ import os
 
 #Global Variables
 #gdata variables
-email_address = os.environ.get('EMAIL_ADDRESS')
-password = os.environ.get('PASSWORD')
-spreadsheet_key = os.environ.get('SPREADSHET_KEY')
+email_address = os.environ.get('SF_BRIGADE_EMAIL')
+password = os.environ.get('SF_BRIGADE_EMAIL_PASS')
+spreadsheet_key = os.environ.get('LOCALFREEWEB_DATA_KEY')
 worksheet_ID = 'od6'
 #cartoDB variables
 SELECT_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
