@@ -59,8 +59,8 @@ def receive_text():
         return generate_text_message(error_message)
     
     internet_resp_dict = get_closest_internet(stop_gps_resp_dict)
-    return generate_text_message(str(internet_resp_dict))
-    return generate_response_text(internet_resp_dict)
+    internet_results_message = generate_response_text(internet_resp_dict)
+    return generate_text_message(internet_results_message)
 
 
 def log_text_message(stop_ID, phone_number):    
@@ -157,7 +157,7 @@ def generate_response_text(internet_resp_dict):
         results += internet_resp_dict['rows'][i]['phone'] + " | today's hrs: "
         results += str(internet_resp_dict['rows'][i][day]).strip() + ";"
     results = "Ask for 'free internet' at these places:" + results
-    return generate_text_message(results)
+    return results
 
 
 if __name__ == "__main__":
