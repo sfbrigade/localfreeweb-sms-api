@@ -40,6 +40,7 @@ def receive_text():
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
     phone_number = request.values.get("From")
+    return generate_text_message(error_message + stop_ID[0])
     #Stop IDs are atleast FOUR digits
     if len(stop_ID) > 0 and len(stop_ID[0]) > 3:
         log_text_message(stop_ID[0], phone_number)
