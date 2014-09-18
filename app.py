@@ -46,7 +46,6 @@ def receive_text():
         #Always remove 1st digit from Stop ID, if it doesn't work and
         #the ID is 5 digits remove 1st TWO digits
         stop_gps_resp_dict = get_stop_gps(stop_ID[0][1:])
-        return generate_text_message(str(stop_gps_resp_dict))
         #When total_rows is 0 there are no results    
         if stop_gps_resp_dict['total_rows'] == 0:
             if len(stop_ID[0]) == 5:
@@ -60,6 +59,7 @@ def receive_text():
         return generate_text_message(error_message)
     
     internet_resp_dict = get_closest_internet(stop_gps_resp_dict)
+    return generate_text_message(str(internet_resp_dict))
     return generate_response_text(internet_resp_dict)
 
 
