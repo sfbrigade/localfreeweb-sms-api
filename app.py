@@ -138,7 +138,7 @@ def get_closest_internet(stop_gps_resp_dict):
     free_net_url += 'ASC LIMIT 3'
     response = urllib.urlopen(free_net_url)
     for line in response:
-        response_dict = json.loads(line)
+        response_dict = json.load(line)
     return response_dict    
 
 
