@@ -21,6 +21,7 @@ spreadsheet_key = os.environ.get('LOCALFREEWEB_DATA_KEY')
 worksheet_ID = 'od6'
 #cartoDB variables
 SELECT_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
+day = 'day' + str(arrow.now('US/Pacific').weekday())
 
 error_message = "We apologize for the inconvenience, we are unable to "
 error_message += "determine the closest 'free internet'. "
@@ -129,8 +130,6 @@ def get_closest_internet(stop_gps_resp_dict):
     """
     geo_lat = str(stop_gps_resp_dict['rows'][0]['stop_lat'])
     geo_long = str(stop_gps_resp_dict['rows'][0]['stop_lon'])
-
-    day = 'day' + str(arrow.now('US/Pacific').weekday())
     
     free_net_url = SELECT_url + 'bizname, address, ' + day + ', phone, '
     free_net_url += 'ST_Distance(the_geom::geography, ST_PointFromText('
@@ -149,13 +148,12 @@ def generate_response_text(internet_resp_dict):
     In arg:      internet_resp_dict
     Out arg:     resp
     """
-    day = 'day' + str(arrow.now('US/Pacific').weekday())
     
     results = ""
     for i in range(0, 3):
-        results += " " + internet_resp_dict['rows'][i]['bizname'] + " "
-        results += internet_resp_dict['rows'][i]['address'] + " "
-        results += internet_resp_dict['rows'][i]['phone'] + " | today's hrs: "
+        results += " " + str(internet_resp_dict['rows'][i]['bizname']) + " "
+        results += str(internet_resp_dict['rows'][i]['address']) + " "
+        results += str(internet_resp_dict['rows'][i]['phone']) + " | today's hrs: "
         results += str(internet_resp_dict['rows'][i][day]).strip() + ";"
     results = "Ask for 'free internet' at these places:" + results
     return generate_text_message(results)
