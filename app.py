@@ -170,8 +170,9 @@ def generate_response_text(internet_resp_dict):
     results += str(internet_resp_dict['rows'][2]['phone']) + " | today's hrs: "
     results += str(internet_resp_dict['rows'][2][day]).strip() + ";"
     results = "Ask for 'free internet' at these places:" + results
-    return generate_text_message(results)
+    return generate_text_message(_removeNonAscii(results))
 
+def _removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 if __name__ == "__main__":
     app.run(debug=True)
