@@ -149,32 +149,14 @@ def generate_response_text(internet_resp_dict):
     Out arg:     resp
     """
     results = ""
-#    for i in range(0, 3):
-#        results += " " + str(internet_resp_dict['rows'][i]['bizname']) + " "
-#        results += str(internet_resp_dict['rows'][i]['address']) + " "
-#        results += str(internet_resp_dict['rows'][i]['phone']) + " | today's hrs: "
-#        results += str(internet_resp_dict['rows'][i][day]).strip() + ";"
         
-#    for i in internet_resp_dict['rows']:
-#        results += " " + str(i['bizname']) + " "
-#        results += str(i['address']) + " "
-#        results += str(i['phone']) + " | today's hrs: "
-#        results += str(i[day]).strip() + ";"        
-
-    results += " " + str(internet_resp_dict['rows'][0]['bizname']).strip() + " "
-    results += str(internet_resp_dict['rows'][0]['address']).strip() + " "
-    results += str(internet_resp_dict['rows'][0]['phone']).strip() + " | today's hrs: "
-    results += str(internet_resp_dict['rows'][0][day]).strip() + ";"
-    results += " " + str(internet_resp_dict['rows'][1]['bizname']).strip() + " "
-    results += str(internet_resp_dict['rows'][1]['address']).strip() + " "
-    results += str(internet_resp_dict['rows'][1]['phone']).strip() + " | today's hrs: "
-    results += str(internet_resp_dict['rows'][1][day]).strip() + ";"
-    results += " " + str(internet_resp_dict['rows'][2]['bizname']).strip() + " "
-    results += str(internet_resp_dict['rows'][2]['address']).strip() + " "
-    results += str(internet_resp_dict['rows'][2]['phone']).strip() + " | today's hrs: "
-    results += str(internet_resp_dict['rows'][2][day]).strip() + ";"
+    for i in internet_resp_dict['rows']:
+        results += str(i['bizname']) + " "
+        results += str(i['address']) + " "
+        results += str(i['phone']) + " | today's hrs: "
+        results += str(i[day]).strip() + ";"        
     
-    results = "Ask for 'free internet' at these places:" + results
+    results = "Ask for 'free internet' at these places: " + results
     return generate_text_message(results)
 
 
