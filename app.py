@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, request, redirect
-import urllib, json
+import urllib, json as simplejson
 import twilio.twiml
 import gdata.spreadsheet.service
 import gdata.service
@@ -104,7 +104,7 @@ def get_stop_gps(stop_ID):
     geo_url = SELECT_url + 'stop_lat, stop_lon FROM stops WHERE stop_id = '
     response = urllib.urlopen(geo_url + stop_ID)
     for line in response:
-        response_dict = json.loads(line)
+        response_dict = simplejson.loads(line)
     return response_dict
 
 
@@ -138,7 +138,7 @@ def get_closest_internet(stop_gps_resp_dict):
     free_net_url += 'ASC LIMIT 3'
     response = urllib.urlopen(free_net_url)
     for line in response:
-        response_dict = json.load(line)
+        response_dict = simplejson.loads(line)
     return response_dict    
 
 
