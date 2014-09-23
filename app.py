@@ -155,16 +155,16 @@ def generate_response_text(internet_resp_dict):
 #        results += str(internet_resp_dict['rows'][i]['phone']) + " | today's hrs: "
 #        results += str(internet_resp_dict['rows'][i][day]).strip() + ";"
         
-#    for i in internet_resp_dict['rows']:
-#        results += " " + str(i['bizname']) + " "
-#        results += str(i['address']) + " "
-#        results += str(i['phone']) + " | today's hrs: "
-#        results += str(i[day]).strip() + ";"        
+    for i in internet_resp_dict['rows']:
+        results += " " + str(i['bizname']) + " "
+        results += str(i['address']) + " "
+        results += str(i['phone']) + " | today's hrs: "
+        results += str(i[day]).strip() + ";"        
 
-    results += " " + str(internet_resp_dict['rows'][0]['bizname']) + " "
-    results += str(internet_resp_dict['rows'][0]['address']) + " "
-    results += str(internet_resp_dict['rows'][0]['phone']) + " | today's hrs: "
-    results += str(internet_resp_dict['rows'][0][day]).strip() + ";"
+#    results += " " + str(internet_resp_dict['rows'][0]['bizname']) + " "
+#    results += str(internet_resp_dict['rows'][0]['address']) + " "
+#    results += str(internet_resp_dict['rows'][0]['phone']) + " | today's hrs: "
+#    results += str(internet_resp_dict['rows'][0][day]).strip() + ";"
 
     results = "Ask for 'free internet' at these places:" + results
     return generate_text_message(results)
