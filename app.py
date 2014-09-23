@@ -148,7 +148,7 @@ def generate_response_text(internet_resp_dict):
     In arg:      internet_resp_dict
     Out arg:     resp
     """
-    internet_resp_dict = simplejson.dumps(internet_resp_dict)
+    internet_resp_dict = simplejson.dumps(str(internet_resp_dict))
     results = ""
 #    for i in range(0, 3):
 #        results += " " + str(internet_resp_dict['rows'][i]['bizname']) + " "
