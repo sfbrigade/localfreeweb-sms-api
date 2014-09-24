@@ -153,8 +153,8 @@ def generate_response_text(internet_resp_dict):
     for i in internet_resp_dict['rows']:
         results += str(i['bizname']) + " "
         results += str(i['address']) + " "
-        results += str(i['phone']) + " | today's hrs:"
-        results += str(i[day]).strip() + ";"        
+        results += str(i['phone']) + " today's hrs:"
+        results += str(i[day]).strip() + " | "        
     
     results = "Ask for 'free internet' at these places: " + results
     return generate_text_message(results)
