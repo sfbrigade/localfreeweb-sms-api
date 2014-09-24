@@ -41,21 +41,21 @@ def receive_text():
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
     phone_number = request.values.get("From")
-    #Stop IDs are atleast FOUR digits
-    if len(stop_ID) > 0 and len(stop_ID[0]) > 3:
-        log_text_message(stop_ID[0], phone_number)
-        #Always remove 1st digit from Stop ID, if it doesn't work and
-        #the ID is 5 digits remove 1st TWO digits
-        stop_gps_resp_dict = get_stop_gps(stop_ID[0][1:])
+    #Stop IDs are either FIVE or SIX digits
+    if len(stop_ID) > 0 and len(stop_ID[0]) > 4:
+        #If Stop ID is 5 digits, remove the leading digit
+        if len(stop_ID[0]) == 5:
+            stop_gps_resp_dict = get_stop_gps(stop_ID[0][1:])
+        #If Stop_ID is 6 digits, remove the first TWO leading digits
+        elif len(stop_ID[0]) == 6:
+            stop_gps_resp_dict = get_stop_gps(stop_ID[0][2:])
+        else:
+            return generate_text_message(error_message)
         #When total_rows is 0 there are no results    
         if stop_gps_resp_dict['total_rows'] == 0:
-            if len(stop_ID[0]) == 5:
-                #Removing first TWO digits
-                stop_gps_resp_dict = get_stop_gps(stop_ID[0][2:])
-                if stop_gps_resp_dict['total_rows'] == 0:
-                    return generate_text_message(error_message)
-            else:
-                return generate_text_message(error_message)
+            return generate_text_message(error_message)
+        else:
+            log_text_message(stop_ID[0], phone_number)
     else:
         return generate_text_message(error_message)
     
@@ -153,7 +153,7 @@ def generate_response_text(internet_resp_dict):
     for i in internet_resp_dict['rows']:
         results += str(i['bizname']) + " "
         results += str(i['address']) + " "
-        results += str(i['phone']) + " | today's hrs: "
+        results += str(i['phone']) + " | today's hrs:"
         results += str(i[day]).strip() + ";"        
     
     results = "Ask for 'free internet' at these places: " + results
