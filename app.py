@@ -156,7 +156,7 @@ def generate_response_text(internet_resp_dict):
         results += str(i['phone']) + " today's hrs:"
         results += str(i[day]).strip() + " | "        
     
-    results = "Ask for 'free internet' at these places:" + results
+    results = "Ask for 'free internet' at these places: " + results
     return generate_text_message(results[:-3])
 
 
