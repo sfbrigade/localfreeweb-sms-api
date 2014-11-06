@@ -75,7 +75,7 @@ def receive_text():
             return generate_text_message(error_message)
         else:
             log_text_message(stop_ID[0], phone_number)
-            #increment_request_count(stop_gps_resp_dict, database_ID)
+            increment_request_count(stop_gps_resp_dict, database_ID)
     else:
         return generate_text_message(error_message)
     
