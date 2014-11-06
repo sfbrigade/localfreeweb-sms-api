@@ -42,7 +42,6 @@ def receive_text():
     locations for 'free internet' from the bus stop that corresponds to the
     recieved ID.
     """
-    #10 + 390 10 + 913 130 + 913
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
     phone_number = request.values.get("From")
@@ -106,11 +105,9 @@ def increment_request_count(stop_request_count, database_ID):
     Global var in:    UPDATE_url
     In args:    stop_gps_resp_dict, database_ID
     """
-    #UPDATE stops SET net_reqs=0 WHERE stop_id=390
     stop_request_count += 1
     update_statement = 'UPDATE stops SET net_reqs = ' + str(stop_request_count)
     update_statement += ' WHERE stop_id = ' + database_ID
-    
     make_request(update_statement)
 
 
