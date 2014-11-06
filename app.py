@@ -112,7 +112,7 @@ def increment_request_count(stop_gps_resp_dict, database_ID):
     update_statement = 'UPDATE stops SET net_reqs = ' + stop_request_count
     update_statement += ' WHERE stop_id = ' + database_ID
     
-    make_request(update_statement)
+    #make_request(update_statement)
 
 
 def make_request(sql_statement):
@@ -129,8 +129,7 @@ def make_request(sql_statement):
     print 'Encoded:', data
     
     try:
-        #response = urllib2.urlopen(url + '?' + data)
-        response = 'hello'
+        response = urllib2.urlopen(url + '?' + data)
         
     except urllib2.HTTPError, e:
         
