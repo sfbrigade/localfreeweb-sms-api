@@ -124,11 +124,12 @@ def make_request(sql_statement):
         'api_key' : apikey, # our account apikey, don't share!
         'q'       : sql_statement  # our SQL statement above
     }
-    #data = urllib.urlencode(params)
-    #print 'Encoded:', data
+    data = urllib.urlencode(params)
+    print 'Encoded:', data
     
     try:
         #response = urllib2.urlopen(url + '?' + data)
+        response = 'hello'
         
     except urllib2.HTTPError, e:
         
