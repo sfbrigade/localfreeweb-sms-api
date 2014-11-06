@@ -61,7 +61,7 @@ def receive_text():
             else:    
                 database_ID = stop_ID[0][1:]
                 stop_gps_resp_dict = get_stop_gps(database_ID)
-        #If Stop_ID is 6 digits, remove the first TWO leading digits
+        #If Stop ID is 6 digits, remove the first TWO leading digits
         elif len(stop_ID[0]) == 6:
             if stop_ID[0] == '130913':
                 database_ID = '913'
@@ -74,7 +74,7 @@ def receive_text():
             return generate_text_message(error_message)
         else:
             log_text_message(stop_ID[0], phone_number)
-            #increment_request_count(stop_gps_resp_dict, database_ID)
+            increment_request_count(stop_gps_resp_dict, database_ID)
     else:
         return generate_text_message(error_message)
     
@@ -105,23 +105,24 @@ def increment_request_count(stop_gps_resp_dict, database_ID):
     In args:    stop_gps_resp_dict, database_ID
     """
     #UPDATE stops SET net_reqs=0 WHERE stop_id=390
-    stop_request_count = stop_gps_resp_dict['rows'][0]['net_reqs']
+    stop_request_count = int(stop_gps_resp_dict['rows'][0]['net_reqs'])
     stop_request_count += 1
     
-    increment_url = UPDATE_url + 'stops SET net_reqs = ' + stop_request_count
-    increment_url += ' WHERE stop_id = ' + database_ID
+    update_statement = 'UPDATE stops SET net_reqs = ' + stop_request_count
+    update_statement += ' WHERE stop_id = ' + database_ID
     
-    make_request(increment_url)
+    make_request(update_statement)
 
-def make_request(request):
-    """Builds and opens url for SQL statement to modify entry in database.
+
+def make_request(sql_statement):
+    """Builds and opens url for SQL statement to modify/add entry in database.
     
     Global vars in:    api_key, url
-    In arg:            request
+    In arg:            sql_statement
     """
     params = {
         'api_key' : apikey, # our account apikey, don't share!
-        'q'       : request  # our SQL statement above
+        'q'       : sql_statement  # our SQL statement above
     }
     data = urllib.urlencode(params)
     print 'Encoded:', data
