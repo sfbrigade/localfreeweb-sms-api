@@ -65,8 +65,10 @@ def receive_text():
         elif len(stop_ID[0]) == 6:
             if stop_ID[0] == '130913':
                 database_ID = '913'
-            database_ID = stop_ID[0][2:]
-            stop_gps_resp_dict = get_stop_gps(database_ID)
+            #Handle generic case    
+            else:
+                database_ID = stop_ID[0][2:]
+                stop_gps_resp_dict = get_stop_gps(database_ID)
         else:
             return generate_text_message(error_message)
         #When total_rows is 0 there are no results    
