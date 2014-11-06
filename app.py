@@ -46,6 +46,7 @@ def receive_text():
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
     database_ID = ''
+    stop_gps_resp_dict = ''
     phone_number = request.values.get("From")
     #Stop IDs are either FIVE or SIX digits
     if len(stop_ID) > 0 and len(stop_ID[0]) > 4:
