@@ -202,14 +202,14 @@ def generate_response_text(internet_resp_dict):
     """Generates text message to be sent back to the user.
     
     In arg:      internet_resp_dict
-    Out arg:     resp
+    Out arg:     twilio.twiml.Response() object
     """
     results = ""
         
     for i in internet_resp_dict['rows']:
         results += str(i['bizname']) + " "
         results += str(i['address']) + " "
-        results += str(i['phone']) + " today's hrs:"
+        results += str(i['phone']) + " open today:"
         results += str(i[day]).strip() + " | "        
     
     results = "Ask for 'free internet' at these places: " + results
