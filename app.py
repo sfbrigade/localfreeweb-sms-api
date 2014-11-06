@@ -101,9 +101,8 @@ def log_text_message(stop_ID, phone_number):
 
 def increment_request_count(stop_request_count, database_ID):
     """Updates request count of Stop ID by incrementing it by 1.
-    
-    Global var in:    UPDATE_url
-    In args:    stop_gps_resp_dict, database_ID
+
+    In args:          stop_gps_resp_dict, database_ID
     """
     stop_request_count += 1
     update_statement = 'UPDATE stops SET net_reqs = ' + str(stop_request_count)
