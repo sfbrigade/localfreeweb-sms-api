@@ -53,22 +53,21 @@ def receive_text():
             #Handle special cases
             if stop_ID[0] == '10390':
                 database_ID = '390'
-                stop_gps_resp_dict = get_stop_gps(database_ID)
             elif stop_ID[0] == '10913':
                 database_ID = '913'
-                stop_gps_resp_dict = get_stop_gps(database_ID)
             #Handle generic case
-            else:    
+            else: 
                 database_ID = stop_ID[0][1:]
-                stop_gps_resp_dict = get_stop_gps(database_ID)
+            stop_gps_resp_dict = get_stop_gps(database_ID)
         #If Stop ID is 6 digits, remove the first TWO leading digits
         elif len(stop_ID[0]) == 6:
+            #Handle special case
             if stop_ID[0] == '130913':
                 database_ID = '913'
             #Handle generic case    
             else:
                 database_ID = stop_ID[0][2:]
-                stop_gps_resp_dict = get_stop_gps(database_ID)
+            stop_gps_resp_dict = get_stop_gps(database_ID)
         else:
             return generate_text_message(error_message)
         #When total_rows is 0 there are no results    
