@@ -2,6 +2,8 @@
 
 from flask import Flask, request, redirect
 import urllib, json as simplejson
+import urllib2
+from urllib2 import Request, urlopen, URLError
 import twilio.twiml
 import gdata.spreadsheet.service
 import gdata.service
@@ -18,8 +20,10 @@ import os
 email_address = os.environ.get('SF_BRIGADE_EMAIL')
 password = os.environ.get('SF_BRIGADE_EMAIL_PASS')
 spreadsheet_key = os.environ.get('LOCALFREEWEB_DATA_KEY')
+apikey = os.environ.get('CARTO_DB_API_KEY')
 worksheet_ID = 'od6'
 #cartoDB variables
+url = 'http://localfreeweb.cartodb.com/api/v2/sql'
 SELECT_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
 day = 'day' + str(arrow.now('US/Pacific').weekday())
 
@@ -38,6 +42,7 @@ def receive_text():
     locations for 'free internet' from the bus stop that corresponds to the
     recieved ID.
     """
+    #10 + 390 10 + 913 130 + 913
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
     phone_number = request.values.get("From")
@@ -45,10 +50,23 @@ def receive_text():
     if len(stop_ID) > 0 and len(stop_ID[0]) > 4:
         #If Stop ID is 5 digits, remove the leading digit
         if len(stop_ID[0]) == 5:
-            stop_gps_resp_dict = get_stop_gps(stop_ID[0][1:])
+            #Handle special cases
+            if stop_ID[0] == '10390':
+                database_ID = '390'
+                stop_gps_resp_dict = get_stop_gps(database_ID)
+            elif stop_ID[0] == '10913':
+                database_ID = '913'
+                stop_gps_resp_dict = get_stop_gps(database_ID)
+            #Handle generic case
+            else:    
+                database_ID = stop_ID[0][1:]
+                stop_gps_resp_dict = get_stop_gps(database_ID)
         #If Stop_ID is 6 digits, remove the first TWO leading digits
         elif len(stop_ID[0]) == 6:
-            stop_gps_resp_dict = get_stop_gps(stop_ID[0][2:])
+            if stop_ID[0] == '130913':
+                database_ID = '913'
+            database_ID = stop_ID[0][2:]
+            stop_gps_resp_dict = get_stop_gps(database_ID)
         else:
             return generate_text_message(error_message)
         #When total_rows is 0 there are no results    
@@ -56,6 +74,7 @@ def receive_text():
             return generate_text_message(error_message)
         else:
             log_text_message(stop_ID[0], phone_number)
+            #increment_request_count(stop_gps_resp_dict, database_ID)
     else:
         return generate_text_message(error_message)
     
@@ -79,6 +98,45 @@ def log_text_message(stop_ID, phone_number):
                                  spreadsheet_key, worksheet_ID)
 
 
+def increment_request_count(stop_gps_resp_dict, database_ID):
+    """Updates request count of Stop ID by incrementing it by 1.
+    
+    Global var in:    UPDATE_url
+    In args:    stop_gps_resp_dict, database_ID
+    """
+    #UPDATE stops SET net_reqs=0 WHERE stop_id=390
+    stop_request_count = stop_gps_resp_dict['rows'][0]['net_reqs']
+    stop_request_count += 1
+    
+    increment_url = UPDATE_url + 'stops SET net_reqs = ' + stop_request_count
+    increment_url += ' WHERE stop_id = ' + database_ID
+    
+    make_request(increment_url)
+
+def make_request(request):
+    """Builds and opens url for SQL statement to modify entry in database.
+    
+    Global vars in:    api_key, url
+    In arg:            request
+    """
+    params = {
+        'api_key' : apikey, # our account apikey, don't share!
+        'q'       : request  # our SQL statement above
+    }
+    data = urllib.urlencode(params)
+    print 'Encoded:', data
+    
+    try:
+        response = urllib2.urlopen(url + '?' + data)
+        
+    except urllib2.HTTPError, e:
+        
+        print e.code
+        print e.msg
+        print e.headers
+        print e.fp.read()    
+    
+
 def build_data_dict(stop_ID, phone_number):
     """Builds a dictionary that includes the date, time, phone_number and
     stop_ID of received text message.
@@ -101,8 +159,9 @@ def get_stop_gps(stop_ID):
     In arg:           stop_ID
     Out arg:          response_dict
     """
-    geo_url = SELECT_url + 'stop_lat, stop_lon FROM stops WHERE stop_id = '
-    response = urllib.urlopen(geo_url + stop_ID)
+    geo_url = SELECT_url + 'stop_lat, stop_lon, net_reqs FROM stops WHERE'
+    geo_url += ' stop_id = ' + stop_ID
+    response = urllib.urlopen(geo_url)
     for line in response:
         response_dict = simplejson.loads(line)
     return response_dict
