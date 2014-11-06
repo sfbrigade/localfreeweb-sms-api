@@ -159,7 +159,7 @@ def get_stop_gps(database_ID):
     In arg:           database_ID
     Out arg:          response_dict
     """
-    geo_url = SELECT_url + 'stop_lat, stop_lon, net_reqs FROM stops WHERE'
+    geo_url = SELECT_url + 'net_reqs, stop_lat, stop_lon FROM stops WHERE'
     geo_url += ' stop_id = ' + database_ID
     response = urllib.urlopen(geo_url)
     for line in response:
