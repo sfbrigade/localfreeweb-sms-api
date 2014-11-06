@@ -45,6 +45,7 @@ def receive_text():
     #10 + 390 10 + 913 130 + 913
     #Create list of all numbers in text message
     stop_ID = re.findall('\d+', request.values.get("Body"))
+    database_ID = ''
     phone_number = request.values.get("From")
     #Stop IDs are either FIVE or SIX digits
     if len(stop_ID) > 0 and len(stop_ID[0]) > 4:
