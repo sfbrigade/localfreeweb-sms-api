@@ -75,7 +75,8 @@ def receive_text():
             return generate_text_message(error_message)
         else:
             log_text_message(stop_ID[0], phone_number)
-            increment_request_count(stop_gps_resp_dict, database_ID)
+            stop_request_count = stop_gps_resp_dict['rows'][0]['net_reqs']
+            increment_request_count(stop_request_count, database_ID)
     else:
         return generate_text_message(error_message)
     
@@ -99,16 +100,13 @@ def log_text_message(stop_ID, phone_number):
                                  spreadsheet_key, worksheet_ID)
 
 
-def increment_request_count(stop_gps_resp_dict, database_ID):
+def increment_request_count(stop_request_count, database_ID):
     """Updates request count of Stop ID by incrementing it by 1.
     
     Global var in:    UPDATE_url
     In args:    stop_gps_resp_dict, database_ID
     """
     #UPDATE stops SET net_reqs=0 WHERE stop_id=390
-    stop_request_count = stop_gps_resp_dict['rows'][0]['net_reqs']
-    #stop_request_count += 1
-    
     update_statement = 'UPDATE stops SET net_reqs = ' + stop_request_count
     update_statement += ' WHERE stop_id = ' + database_ID
     
