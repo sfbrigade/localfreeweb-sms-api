@@ -107,7 +107,7 @@ def increment_request_count(stop_request_count, database_ID):
     In args:    stop_gps_resp_dict, database_ID
     """
     #UPDATE stops SET net_reqs=0 WHERE stop_id=390
-    update_statement = 'UPDATE stops SET net_reqs = ' + stop_request_count
+    update_statement = 'UPDATE stops SET net_reqs = ' + str(stop_request_count)
     #update_statement += ' WHERE stop_id = ' + database_ID
     
     #make_request(update_statement)
