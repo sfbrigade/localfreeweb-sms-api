@@ -5,23 +5,13 @@ import urllib, json as simplejson
 import urllib2
 from urllib2 import Request, urlopen, URLError
 import twilio.twiml
-import gdata.spreadsheet.service
-import gdata.service
-import atom.service
-import gdata.spreadsheet
-import atom
 import arrow
 import re
 import os
 
 
 #Global Variables
-#gdata variables
-email_address = os.environ.get('SF_BRIGADE_EMAIL')
-password = os.environ.get('SF_BRIGADE_EMAIL_PASS')
-spreadsheet_key = os.environ.get('LOCALFREEWEB_DATA_KEY')
 apikey = os.environ.get('CARTO_DB_API_KEY')
-worksheet_ID = 'od6'
 #cartoDB variables
 url = 'http://localfreeweb.cartodb.com/api/v2/sql'
 SELECT_url = 'http://localfreeweb.cartodb.com/api/v2/sql?q=SELECT '
@@ -73,7 +63,6 @@ def receive_text():
         if stop_gps_resp_dict['total_rows'] == 0:
             return generate_text_message(error_message)
         else:
-            log_text_message(stop_ID[0], phone_number)
             stop_request_count = stop_gps_resp_dict['rows'][0]['net_reqs']
             increment_request_count(stop_request_count, database_ID)
     else:
@@ -81,22 +70,6 @@ def receive_text():
     
     internet_resp_dict = get_closest_internet(stop_gps_resp_dict)
     return generate_response_text(internet_resp_dict)
-
-
-def log_text_message(stop_ID, phone_number):    
-    """Logs the incoming text sender's phone number & the stop ID into a Google
-    Spreadsheet.
-    
-    In args:           stop_ID, phone_number
-    Global vars in:    email_address, password, spreadsheet_key, worksheet_ID
-    """
-    spr_client = gdata.spreadsheet.service.SpreadsheetsService()
-    spr_client.email = email_address
-    spr_client.password = password
-    spr_client.source = 'localfreeweb-sms-api'
-    spr_client.ProgrammaticLogin()
-    entry = spr_client.InsertRow(build_data_dict(stop_ID, phone_number),
-                                 spreadsheet_key, worksheet_ID)
 
 
 def increment_request_count(stop_request_count, database_ID):
@@ -131,22 +104,7 @@ def make_request(sql_statement):
         print e.code
         print e.msg
         print e.headers
-        print e.fp.read()    
-    
-
-def build_data_dict(stop_ID, phone_number):
-    """Builds a dictionary that includes the date, time, phone_number and
-    stop_ID of received text message.
-    
-    In args:    stop_ID, phone_number
-    Out arg:    dict
-    """
-    dict = {}
-    dict['date'] = arrow.now('US/Pacific').format('MM/DD/YYYY')
-    dict['time'] = arrow.now('US/Pacific').format('hh:mm:ss A')
-    dict['phone'] = phone_number
-    dict['stop'] = stop_ID
-    return dict
+        print e.fp.read()
     
     
 def get_stop_gps(database_ID):    
